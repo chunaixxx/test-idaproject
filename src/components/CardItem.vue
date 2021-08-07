@@ -5,7 +5,7 @@
 		<div class="card-item__inner">
 			<h3 class="card-item__title">{{ title }}</h3>
 			<p class="card-item__desc">{{ desc }}</p>
-			<p class="card-item__price">{{ price }} руб.</p>
+			<p class="card-item__price">{{ price.toLocaleString('ru') }} руб.</p>
 		</div>
 
 		<button class="card-item__delete" @click="deleteGood(id)">
