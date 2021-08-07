@@ -42,7 +42,7 @@ export default {
 			default: ''
 		},
 		price: {
-			type: String,
+			type: Number,
 			required: true
 		}
 	},
