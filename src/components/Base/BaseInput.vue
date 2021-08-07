@@ -1,16 +1,18 @@
 <template>
 	<div class="base-input-wrapper">
 		<input
-			type="text"
-			class="base-input"
-			@input="updateValue"
+			:type="type"
+			:class="{ 'base-input--error': !isValid }"
 			:value="modelValue"
-			:class="{ 'base-input--error': !valid }"
+			@input="updateValue"
+			@blur="validate"
+			:required="required"
+			class="base-input"
 			v-bind="$attrs"
 		/>
 
 		<transition name="transform">
-			<span v-if="!valid" class="base-input-error">
+			<span v-if="!isValid" class="base-input-error">
 				Поле является обязательным
 			</span>
 		</transition>
@@ -23,17 +25,71 @@ export default {
 
 	props: {
 		modelValue: String,
-		valid: {
+		modelModifiers: { default: () => ({}) },
+
+		required: {
 			type: Boolean,
-			default: true
+			default: false
+		},
+
+		max: {
+			type: [Number, String],
+			default: Infinity,
+			validator: value => {
+				return !isNaN(value)
+			}
+		},
+
+		type: {
+			type: String,
+			default: 'text'
 		}
 	},
 
 	emits: ['update:modelValue'],
 
+	data: () => ({
+		isValid: true
+	}),
+
 	methods: {
+		validate(event) {
+			const value = event.target.value
+
+			if (this.required && value === '') {
+				this.isValid = false
+			} else {
+				this.isValid = true
+			}
+		},
+
 		updateValue(event) {
-			this.$emit('update:modelValue', event.target.value)
+			this.validate(event)
+
+			let value = event.target.value
+
+			// modifiers for retrict letters and devided number
+			// example: 1200000 > 1 200 000
+			if (this.modelModifiers.devidedNumber) {
+				// removing all spaces
+				value = value.replace(/\s+/g, '')
+
+				// only number in the input?
+				const isOnlyNumbers = /^\d+$/.test(value)
+
+				if (value.length <= 0) {
+					value = ''
+				} else if (!isOnlyNumbers || value.length > +this.max) {
+					// prevent default if the string contains
+					// letters or is greater than max
+					event.target.value = this.modelValue
+					return
+				} else {
+					value = new Intl.NumberFormat('ru').format(+value)
+				}
+			}
+
+			this.$emit('update:modelValue', value)
 		}
 	}
 }
@@ -73,6 +129,6 @@ export default {
 .transform-enter-from,
 .transform-leave-to {
 	opacity: 0;
-	transform: translateX(10px)
+	transform: translateX(10px);
 }
 </style>
