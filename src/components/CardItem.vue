@@ -27,7 +27,11 @@ export default {
 		},
 		imgUrl: {
 			type: String,
-			required: true
+			required: true,
+			validator: url => {
+				// is the string a path to the picture?
+				return /^https?:\/\/.*\.(?:jpe?g|gif|png)$/gi.test(url)
+			}
 		},
 		title: {
 			type: String,
