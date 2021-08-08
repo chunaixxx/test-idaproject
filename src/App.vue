@@ -85,11 +85,11 @@ body {
 	display: grid;
 	gap: 16px;
 	grid-template-columns: 332px 1fr;
-	grid-template-rows: 40px 1fr;
+	grid-template-rows: auto 1fr;
 }
 
 .header {
-	grid-column: span 2;
+	grid-column: 1 / 3;
 
 	display: flex;
 	justify-content: space-between;
@@ -102,10 +102,22 @@ body {
 			weight: 600;
 		}
 	}
+
+	@media screen and (max-width: 700px) {
+		flex-direction: column;
+
+		&__title {
+			margin-bottom: 16px;
+		}
+	}
 }
 
 .aside {
 	grid-column: 1;
+
+	@media screen and (max-width: 700px) {
+		grid-column: 1 / 3;
+	}
 }
 
 .main {
@@ -113,6 +125,19 @@ body {
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-auto-rows: min-content;
 	gap: 16px;
+
+	@media screen and (max-width: 1200px) {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	@media screen and (max-width: 900px) {
+		grid-template-columns: 1fr;
+	}
+
+	@media screen and (max-width: 700px) {
+		grid-column: 1 / 3;
+		grid-row: 3;
+	}
 }
 
 // Vue transition
