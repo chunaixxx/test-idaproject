@@ -58,7 +58,7 @@ export default {
 
 		imgUrlIsValid() {
 			// is the string a path to the picture?
-			return /^https?:\/\/.*\.(?:jpe?g|gif|png)$/gi.test(this.mgUrl)
+			return /^https?:\/\/.*\.(?:jpe?g|gif|png)$/gi.test(this.imgUrl)
 		}
 	}
 }
