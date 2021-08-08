@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
 
 export default createStore({
 	state: {
@@ -15,5 +16,6 @@ export default createStore({
 		deleteGood(state, id) {
 			state.goods = state.goods.filter(item => item.id !== id)
 		}
-	}
+	},
+	plugins: [createPersistedState()]
 })
