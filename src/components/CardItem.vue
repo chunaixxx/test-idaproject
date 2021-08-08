@@ -1,10 +1,21 @@
 <template>
 	<div class="card-item">
-		<img
-			:src="imgUrlIsValid ? imgUrl : require('@/assets/default-img.png')"
-			class="card-item__img"
-			alt=""
-		/>
+		<div class="card-item__img-wrapper">
+			<div v-if="imgIsLoading" class="card-item__preloader-wrapper">
+				<img
+					:src="require('@/assets/preloader.svg')"
+					class="card-item__preloader"
+					alt=""
+				/>
+			</div>
+
+			<img
+				:src="imgUrlIsValid ? imgUrl : require('@/assets/default-img.png')"
+				class="card-item__img"
+				alt=""
+				@load="imgLoad"
+			/>
+		</div>
 
 		<div class="card-item__inner">
 			<h3 class="card-item__title">{{ title }}</h3>
@@ -47,7 +58,15 @@ export default {
 		}
 	},
 
+	data: () => ({
+		imgIsLoading: true
+	}),
+
 	methods: {
+		imgLoad() {
+			this.imgIsLoading = false
+		},
+
 		...mapMutations(['deleteGood'])
 	},
 
@@ -73,6 +92,27 @@ export default {
 	background-color: $block-bg;
 
 	position: relative;
+
+	&__img-wrapper {
+		position: relative;
+	}
+
+	&__preloader-wrapper {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+
+		background-color: $block-bg;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	&__preloader {
+		color: $primary-color;
+	}
 
 	&__img {
 		width: 100%;
