@@ -1,4 +1,7 @@
-# test-idaproject
+# Junior frontend-developer test job (idaproject)
+
+## Demo
+[click](https://chunaixxx.github.io/test-idaproject/).
 
 ## Project setup
 ```
