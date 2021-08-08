@@ -1,6 +1,10 @@
 <template>
 	<div class="card-item">
-		<img :src="imgUrl" class="card-item__img" alt="" />
+		<img
+			:src="imgUrlIsValid ? imgUrl : require('@/assets/default-img.png')"
+			class="card-item__img"
+			alt=""
+		/>
 
 		<div class="card-item__inner">
 			<h3 class="card-item__title">{{ title }}</h3>
@@ -27,11 +31,7 @@ export default {
 		},
 		imgUrl: {
 			type: String,
-			required: true,
-			validator: url => {
-				// is the string a path to the picture?
-				return /^https?:\/\/.*\.(?:jpe?g|gif|png)$/gi.test(url)
-			}
+			required: true
 		},
 		title: {
 			type: String,
@@ -54,6 +54,11 @@ export default {
 	computed: {
 		formatPrice() {
 			return `${this.price.toLocaleString('ru')} руб.`
+		},
+
+		imgUrlIsValid() {
+			// is the string a path to the picture?
+			return /^https?:\/\/.*\.(?:jpe?g|gif|png)$/gi.test(this.mgUrl)
 		}
 	}
 }
