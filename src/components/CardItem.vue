@@ -103,6 +103,7 @@ export default {
 	&__desc {
 		font-size: 16px;
 		margin-bottom: 32px;
+		word-break: break-all;
 	}
 
 	&__price {
