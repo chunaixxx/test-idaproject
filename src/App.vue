@@ -86,6 +86,10 @@ body {
 	gap: 16px;
 	grid-template-columns: 332px 1fr;
 	grid-template-rows: auto 1fr;
+
+	@media screen and (max-width: 700px) {
+		grid-template-columns: 1fr;
+	}
 }
 
 .header {
@@ -108,6 +112,7 @@ body {
 
 		&__title {
 			margin-bottom: 16px;
+			text-align: center;
 		}
 	}
 }
